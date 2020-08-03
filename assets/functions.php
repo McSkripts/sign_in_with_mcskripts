@@ -150,7 +150,7 @@ function sign_in_with_mcskripts_link_token_to_userid($userid, $user_token){
 function sign_in_with_mcskripts_login_userid($userid, $ip_address){
   global $cc_encryption_hash;
   
-  $entry = Capsule::table('tblclients')->select('id', 'password')->where('id', '=', $userid)->first();
+  $entry = Capsule::table('tblclients')->select('id', 'password', 'email')->where('id', '=', $userid)->first();
   if(is_object($entry) && isset($entry->id)){
 	if(!session_id()){
 	  session_start();
@@ -158,7 +158,7 @@ function sign_in_with_mcskripts_login_userid($userid, $ip_address){
 
 	if(method_exists('WHMCS\Authentication\Client', 'generateClientLoginHash')){
 	  $_SESSION['uid'] = $entry->id;
-	  $_SESSION['upw'] = WHMCS\Authentication\Client::generateClientLoginHash($entry->id, '', $entry->password);
+	  $_SESSION['upw'] = WHMCS\Authentication\Client::generateClientLoginHash($entry->id, '', $entry->password, $entry->email);
 	}else{
 	  $_SESSION['uid'] = $entry->id;
 	  $_SESSION['upw'] = sha1($entry->id . $entry->password . $ip_address . substr(sha1($cc_encryption_hash), 0, 20));
