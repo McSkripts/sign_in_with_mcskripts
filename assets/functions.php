@@ -21,7 +21,7 @@ function sign_in_with_mcskripts_get_userinfo($authorization_code){
   
   if($settings['handler'] == 'curl'){
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, "https://api.mcskri.pt/v1/connect/token");
+	curl_setopt($ch, CURLOPT_URL, "https://api.mcskri.pt/v2/connect/token");
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -38,7 +38,7 @@ function sign_in_with_mcskripts_get_userinfo($authorization_code){
 	
 	if($tokenResponse["success"]){
 	  $ch = curl_init();
-	  curl_setopt($ch, CURLOPT_URL, "https://api.mcskri.pt/v1/connect/userinfo");
+	  curl_setopt($ch, CURLOPT_URL, "https://api.mcskri.pt/v2/connect/userinfo");
 	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		'Content-Type: application/json',
